@@ -227,7 +227,7 @@ class _EditorScreenState extends State<EditorScreen> {
         FilledButton.tonalIcon(
           onPressed: _openPublish,
           icon: const Icon(Icons.cloud_upload_outlined),
-          label: Text(wide ? 'Done — publish…' : 'Publish…'),
+          label: Text(wide ? 'Upload & backups…' : 'Upload/backups…'),
           style: FilledButton.styleFrom(minimumSize: const Size(0, 56)),
         ),
         const SizedBox(width: 20),
