@@ -76,6 +76,19 @@ class _PublishScreenState extends State<PublishScreen> {
 
   Future<void> _upload() => _run('Getting ready…', () async {
     final texts = c.currentTexts;
+    // An emptied element stops being a field once published, so it could
+    // never be edited again.
+    final empty = [
+      for (final e in texts.entries)
+        if (e.value.trim().isEmpty) c.doc.fields[e.key].label,
+    ];
+    if (empty.isNotEmpty) {
+      showMessage(
+        '"${empty.first}" is empty. Type some text or press Undo on it, '
+        'then upload again.',
+      );
+      return;
+    }
     final imageIds = c.changedImageIds;
     final paths = <int, String>{};
     for (var i = 0; i < imageIds.length; i++) {
@@ -488,7 +501,12 @@ class _PublishScreenState extends State<PublishScreen> {
               alignment: WrapAlignment.center,
               children: [
                 FilledButton.icon(
-                  onPressed: () => openInNewTab(c.page.siteBase.toString()),
+                  // Version query so the browser can't show a cached old page.
+                  onPressed: () => openInNewTab(
+                    c.page.siteBase
+                        .replace(queryParameters: {'v': c.page.version})
+                        .toString(),
+                  ),
                   icon: const Icon(Icons.open_in_new),
                   label: const Text('Open website'),
                   style: FilledButton.styleFrom(minimumSize: const Size(0, 56)),

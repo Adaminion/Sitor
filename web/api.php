@@ -4,8 +4,8 @@
 // nothing else may reach the output.
 
 ob_start();
-@ini_set('display_errors', '0');
-@ini_set('zlib.output_compression', '0');
+if (function_exists('ini_set')) { @ini_set('display_errors', '0'); }
+if (function_exists('ini_set')) { @ini_set('zlib.output_compression', '0'); }
 @date_default_timezone_set(@date_default_timezone_get());
 
 define('SITOR_API_VERSION', 1);
@@ -223,7 +223,7 @@ function sitor_write_file($path, $data)
     $perms = @fileperms($path);
     $tmp = dirname($path) . '/.sitor-tmp-' . sitor_uniq();
     if (@file_put_contents($tmp, $data) === strlen($data)) {
-        @chmod($tmp, $perms !== false ? ($perms & 0777) : 0644);
+        if (function_exists('chmod')) { @chmod($tmp, $perms !== false ? ($perms & 0777) : 0644); }
         if (@rename($tmp, $path)) {
             return;
         }
@@ -794,9 +794,9 @@ function sitor_main($cfg)
         return array('ok' => true, 'app' => 'sitor', 'version' => SITOR_API_VERSION);
     }
     sitor_check_auth($cfg);
-    @set_time_limit(300);
+    if (function_exists('set_time_limit')) { @set_time_limit(300); }
     if ($method === 'POST' || $action === 'download_current') {
-        @ignore_user_abort(true);
+        if (function_exists('ignore_user_abort')) { @ignore_user_abort(true); }
     }
     $fn = 'sitor_action_' . $action;
     return $fn($cfg);
