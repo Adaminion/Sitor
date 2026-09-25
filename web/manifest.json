@@ -1,11 +1,11 @@
 {
-    "name": "sitor",
-    "short_name": "sitor",
+    "name": "Sitor",
+    "short_name": "Sitor",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",
     "theme_color": "#0175C2",
-    "description": "A new Flutter project.",
+    "description": "Website editor",
     "orientation": "portrait-primary",
     "prefer_related_applications": false,
     "icons": [
