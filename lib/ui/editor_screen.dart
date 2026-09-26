@@ -1,4 +1,4 @@
-// 2026-09-25
+// 2026-09-26
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -10,6 +10,9 @@ import 'common.dart';
 import 'editor_controller.dart';
 import 'field_widgets.dart';
 import 'publish_screen.dart';
+
+/// Keep in step with `version:` in pubspec.yaml.
+const _version = '1.0.0';
 
 /// Rows are shown side by side only if every cell gets at least this width.
 const _minCellWidth = 140.0;
@@ -150,7 +153,39 @@ class _EditorScreenState extends State<EditorScreen> {
               Expanded(flex: 6, child: _previewPane(context)),
             ],
           ),
+          bottomNavigationBar: _footer(context),
         ),
+      ),
+    );
+  }
+
+  Widget _footer(BuildContext context) {
+    final theme = Theme.of(context);
+    final muted = theme.textTheme.bodySmall?.copyWith(
+      color: theme.colorScheme.onSurfaceVariant,
+    );
+    return Container(
+      height: 36,
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      decoration: BoxDecoration(
+        color: theme.colorScheme.surface,
+        border: Border(
+          top: BorderSide(color: theme.colorScheme.outlineVariant),
+        ),
+      ),
+      child: Row(
+        children: [
+          Text('Sitor $_version', style: muted),
+          const Spacer(),
+          TextButton(
+            onPressed: () => openInNewTab('mailto:support@adaminion.com'),
+            child: const Text('support@adaminion.com'),
+          ),
+          TextButton(
+            onPressed: () => openInNewTab('https://adaminion.com'),
+            child: const Text('adaminion.com'),
+          ),
+        ],
       ),
     );
   }
@@ -177,7 +212,7 @@ class _EditorScreenState extends State<EditorScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const Text(
-                  'Website editor',
+                  'SITOR - the awesomest webSIte ediTOR !!!',
                   style: TextStyle(fontWeight: FontWeight.w700),
                 ),
                 Text(
